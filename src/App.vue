@@ -1,28 +1,58 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <MessageScreen :messages="messages"/>
+    <Member />
+    <Input :socket="socket" :eventName="events.CHAT_MESSAGE" @sendMessageChild="sendMessageParen"/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Input from './components/Input'
+import Member from './components/Members'
+import MessageScreen from './components/MessageScreen'
+import io from 'socket.io-client'
+import {EventConstants} from './config/constants.js'
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+  data:function()
+  {
+    return{
+      socket: io('http://localhost:4001/'),
+      events: EventConstants,
+      messages:[]
+    }
+  },
+  methods:
+  {
+    sendMessageParen(data)
+    {
+      this.messages = data
+    }
+  },
+  components: 
+  {
+    Input,Member,MessageScreen
   }
 }
 </script>
 
 <style>
+
+*{
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+    height: 100%;
+}
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  display: grid;
+  grid-template-rows: 1fr 2rem;
+  grid-template-columns: 1fr 15rem;
+  grid-template-areas: 
+  "message member"
+  "input member";
 }
 </style>
