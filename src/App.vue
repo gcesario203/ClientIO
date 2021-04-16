@@ -1,7 +1,8 @@
 <template>
   <div id="app">
+    <RoomHeader :roomName="roomName"/>
     <MessageScreen :messages="messages"/>
-    <Member />
+    <Member :users="users" :events="userEvents" />
     <Input :socket="socket" :eventName="events.CHAT_MESSAGE" @sendMessageChild="sendMessageParen"/>
   </div>
 </template>
@@ -10,6 +11,8 @@
 import Input from './components/Input'
 import Member from './components/Members'
 import MessageScreen from './components/MessageScreen'
+import RoomHeader from './components/RoomHeader'
+
 import io from 'socket.io-client'
 import {EventConstants} from './config/constants.js'
 
@@ -20,7 +23,10 @@ export default {
     return{
       socket: io('http://localhost:4001/'),
       events: EventConstants,
-      messages:[]
+      messages:[],
+      roomName:'SALA MUITO FODA UIUI',
+      users:[],
+      userEvents:[]
     }
   },
   methods:
@@ -30,9 +36,25 @@ export default {
       this.messages = data
     }
   },
+  created()
+  {
+    this.socket.emit(this.events.JOIN)
+    this.socket.on(this.events.JOIN, data =>
+    {
+      console.log(data)
+    })
+
+    this.socket.on(this.events.LEAVE, data =>
+    {
+      console.log(data)
+    })
+  },
   components: 
   {
-    Input,Member,MessageScreen
+    Input,
+    Member,
+    MessageScreen,
+    RoomHeader
   }
 }
 </script>
@@ -49,9 +71,10 @@ export default {
 
 #app {
   display: grid;
-  grid-template-rows: 1fr 2rem;
+  grid-template-rows: 2rem 1fr 2rem;
   grid-template-columns: 1fr 15rem;
   grid-template-areas: 
+  "header member"
   "message member"
   "input member";
 }

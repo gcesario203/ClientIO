@@ -2,6 +2,7 @@
   <div class="inputInsert">
       <input
         v-model="message"
+        @keyup.enter="send"
         class="inputInsert__content"
         placeholder="Digite aqui"
         type="text"

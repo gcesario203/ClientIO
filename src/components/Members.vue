@@ -5,10 +5,9 @@
         <div class="member__title">
           <h1>Membros</h1>
         </div>
-        <p class="member__content__text">Marquinho</p>
-        <p class="member__content__text">Luizinho</p>
-        <p class="member__content__text">Zezinho</p>
-        <p class="member__content__text">Marcos</p>
+        <div class="member__box" v-for="user in users" :key="user.id">
+          <p class="member__content__text">{{user}}</p>
+        </div>
       </div>
     </div>
     <div class="member__logs">
@@ -16,10 +15,9 @@
         <div class="member__title">
           <h1>Eventos</h1>
         </div>
-        <p class="member__content__text">Entrou</p>
-        <p class="member__content__text">Saiu</p>
-        <p class="member__content__text">Escrevendo</p>
-        <p class="member__content__text">Teste</p>
+        <div class="member__box" v-for="event in events" :key="event.id">
+          <p class="member__content__text">{{event}}</p>
+        </div>
       </div>
     </div>
   </div>
@@ -28,7 +26,7 @@
 <script>
 export default {
   name: "Member",
-  props: ["members"],
+  props: ["users","events"],
 };
 </script>
 
@@ -54,7 +52,6 @@ export default {
 
 .member__content__box {
   display: flex;
-  height: 100%;
   flex-direction: column;
   margin: 1rem;
   padding: 1rem;
@@ -65,5 +62,13 @@ export default {
 
 .member__content__text {
   color: white;
+}
+
+.member__box {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow-y: scroll;
+  width: 100%;
 }
 </style>

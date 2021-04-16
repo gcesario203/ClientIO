@@ -1,16 +1,21 @@
 <template>
   <div class="message">
+      <!--<div class="message__content" v-for="message in messages" :key="message.id">
+          <MessageContent name="teste" :message="message.message"/>
+      </div>-->
       <div class="message__content" v-for="message in messages" :key="message.id">
-          <h1>{{message.message}}</h1>
+          <MessageContent name="teste" :message="message.message"/>
       </div>
   </div>
 </template>
 
 <script>
+import MessageContent from './MessageContent'
 export default 
 {
     name:'Message',
-    props:['messages']
+    props:['messages'],
+    components:{MessageContent}
 };
 </script>
 
@@ -19,17 +24,9 @@ export default
 .message{
     grid-area: message;
     background-color: #BA9B8E;
-    height: 100%;
-    width: 100%;
     display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-}
-
-.message__content{
-    display: flex;
-    flex-direction: column;
     height: 100%;
-    max-height: 100%;
+    flex-direction: column;
+    overflow-y: scroll;
 }
 </style>
