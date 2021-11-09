@@ -1,81 +1,40 @@
 <template>
   <div id="app">
-    <RoomHeader :roomName="roomName"/>
-    <MessageScreen :messages="messages"/>
-    <Member :users="users" :events="userEvents" />
-    <Input :socket="socket" :eventName="events.CHAT_MESSAGE" @sendMessageChild="sendMessageParen"/>
+    <v-app>
+      <main>
+        <v-container
+          fluid
+          fill-height
+          style="background: #646E78; height: 100vh"
+        >
+          <router-view />
+        </v-container>
+      </main>
+    </v-app>
   </div>
 </template>
-
-<script>
-import Input from './components/Input'
-import Member from './components/Members'
-import MessageScreen from './components/MessageScreen'
-import RoomHeader from './components/RoomHeader'
-
-import io from 'socket.io-client'
-import {EventConstants} from './config/constants.js'
-
-export default {
-  name: 'App',
-  data:function()
-  {
-    return{
-      socket: io('http://localhost:4001/'),
-      events: EventConstants,
-      messages:[],
-      roomName:'SALA MUITO FODA UIUI',
-      users:[],
-      userEvents:[]
-    }
-  },
-  methods:
-  {
-    sendMessageParen(data)
-    {
-      this.messages = data
-    }
-  },
-  created()
-  {
-    this.socket.emit(this.events.JOIN)
-    this.socket.on(this.events.JOIN, data =>
-    {
-      console.log(data)
-    })
-
-    this.socket.on(this.events.LEAVE, data =>
-    {
-      console.log(data)
-    })
-  },
-  components: 
-  {
-    Input,
-    Member,
-    MessageScreen,
-    RoomHeader
-  }
-}
-</script>
-
 <style>
-
-*{
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-    height: 100%;
+.notification{
+  padding: 0 10vh;
+  width: 30vw;
+  font-family:Georgia, 'Times New Roman', Times, serif ;
+  color: white;
 }
 
-#app {
-  display: grid;
-  grid-template-rows: 2rem 1fr 2rem;
-  grid-template-columns: 1fr 15rem;
-  grid-template-areas: 
-  "header member"
-  "message member"
-  "input member";
+.is-info{
+  background: #0277BD;
 }
+
+.is-warning{
+  background: #F9A825;
+}
+
+.is-danger{
+  background: #D32F2F;
+}
+
+.is-success{
+  background: #43A047;
+}
+
 </style>

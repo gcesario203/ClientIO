@@ -6,7 +6,7 @@
           <h1>Membros</h1>
         </div>
         <div class="member__box" v-for="user in users" :key="user.id">
-          <p class="member__content__text">{{user}}</p>
+          <p class="member__content__text">{{user.name}}</p>
         </div>
       </div>
     </div>
@@ -31,44 +31,4 @@ export default {
 </script>
 
 <style>
-.member {
-  grid-area: member;
-  background-color: #585651;
-}
-
-.member__content {
-  height: 50%;
-  max-height: 50%;
-  display: flex;
-  flex-direction: column;
-}
-
-.member__logs {
-  height: 50%;
-  display: flex;
-  flex-direction: column;
-  max-height: 50%;
-}
-
-.member__content__box {
-  display: flex;
-  flex-direction: column;
-  margin: 1rem;
-  padding: 1rem;
-  border-radius: 10px;
-  background-color: #814b38;
-  align-items: center;
-}
-
-.member__content__text {
-  color: white;
-}
-
-.member__box {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  overflow-y: scroll;
-  width: 100%;
-}
 </style>

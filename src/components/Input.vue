@@ -1,71 +1,49 @@
 <template>
-  <div class="inputInsert">
-      <input
-        v-model="message"
-        @keyup.enter="send"
-        class="inputInsert__content"
-        placeholder="Digite aqui"
-        type="text"
-      >
-      <Send class="input__button" v-on:click="send"/>
-  </div>
+  <v-row align="center" justify="center">
+    <v-col cols="11">
+      <v-text-field v-model="message" @keyup.enter="send" label="Digite aqui" />
+    </v-col>
+    <v-col cols="1">
+      <v-btn @click="send" icon>
+        <v-icon small>mdi-send</v-icon>
+      </v-btn>
+    </v-col>
+  </v-row>
 </template>
 
 <script>
-import Send from 'vue-material-design-icons/Send'
-
 export default {
   name: "Input",
-  data:function () {
-      return{
-          message:null,
-          messages:[]
-      }  
+  data: function () {
+    return {
+      message: null,
+      messages: [],
+    };
   },
-  components:{Send},
-  props:['socket','eventName'],
-  methods:{
-      send()
-      {
-          this.socket.emit(this.eventName, this.message)
-          this.messages.push({id:this.messages.length+1,message:this.message})
-          this.$emit('sendMessageChild',this.messages)
-          this.message = null
-      }
+  props: ["socket", "eventName", "roomName"],
+  methods: {
+    send() {
+      this.socket.emit(this.eventName, {
+        roomName: this.roomName,
+        msg: this.message,
+      });
+      this.messages.push({
+        id: this.messages.length + 1,
+        message: this.message,
+      });
+      this.$emit("sendMessageChild", this.messages);
+      this.message = null;
+    },
   },
-  created()
-  {
-      this.socket.on(this.eventName, data =>
-      {
-          this.messages.push({id:this.messages.length+1, message:data})
-          this.$emit('sendMessageChild',this.messages)
-      })
-  }
+  created() {},
+  mounted() {
+    this.socket.on(this.eventName, (data) => {
+      this.messages.push({ id: this.messages.length + 1, ...data });
+      this.$emit("sendMessageChild", this.messages);
+    });
+  },
 };
 </script>
 
 <style>
-.inputInsert {
-  grid-area: input;
-  width: 100%;
-  display: flex;
-  align-items: center;
-}
-
-.inputInsert__content{
-    width: 100%;
-    padding: 0 0 0 1rem;    
-}
-
-.input__button
-{
-    padding: 0 2rem;
-    background-color: #6F313C;
-    transition: 1ms;
-}
-
-.input__button:hover{
-    cursor: pointer;
-    background-color: #974554;
-}
 </style>

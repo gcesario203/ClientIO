@@ -12,13 +12,4 @@ export default {
 </script>
 
 <style>
-.roomHeader{
-    grid-area: header;
-    background-color: #585651;
-    display: flex;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
-    color: white;
-}
 </style>

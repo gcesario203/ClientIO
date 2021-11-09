@@ -4,7 +4,7 @@
           <MessageContent name="teste" :message="message.message"/>
       </div>-->
       <div class="message__content" v-for="message in messages" :key="message.id">
-          <MessageContent name="teste" :message="message.message"/>
+          <MessageContent :name="message.userName" :message="message.message"/>
       </div>
   </div>
 </template>
@@ -20,13 +20,4 @@ export default
 </script>
 
 <style>
-
-.message{
-    grid-area: message;
-    background-color: #BA9B8E;
-    display: flex;
-    height: 100%;
-    flex-direction: column;
-    overflow-y: scroll;
-}
 </style>

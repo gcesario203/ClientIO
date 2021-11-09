@@ -9,23 +9,33 @@
     "start": "webpack-dev-server --mode development"
   },
   "dependencies": {
+    "axios": "^0.24.0",
     "core-js": "^3.6.5",
     "socket.io-client": "^4.0.1",
+    "velocity-animate": "^1.5.2",
     "vue": "^2.6.11",
-    "vue-material-design-icons": "^4.11.0"
+    "vue-material-design-icons": "^4.11.0",
+    "vue-router": "^3.2.0",
+    "vue2-notify": "^1.4.0",
+    "vuetify": "^2.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.11.6",
     "@babel/preset-env": "^7.11.5",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-plugin-router": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
+    "sass": "~1.32.0",
+    "sass-loader": "^10.0.0",
+    "vue-cli-plugin-vuetify": "~2.4.3",
     "vue-loader": "^15.9.3",
     "vue-template-compiler": "^2.6.11",
+    "vuetify-loader": "^1.7.0",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0"

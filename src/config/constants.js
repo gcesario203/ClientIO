@@ -13,4 +13,20 @@ const EventConstants =
     PING_SERVER : "ping"
 }
 
-module.exports = {EventConstants}
+const GeneralConstants = {
+    BASEURL: "http://localhost:3000",
+    STORAGEKEY: 'TCCAPP'
+}
+
+const ResponseConstants = {
+    OK: "OK"
+}
+
+const MethodsConstants ={
+    GET: 'get',
+    POST: 'post',
+    PUT: 'put',
+    DELETE: 'delete'
+}
+
+module.exports = {EventConstants, MethodsConstants, ResponseConstants, GeneralConstants}
