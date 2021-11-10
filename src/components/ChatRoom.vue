@@ -75,12 +75,7 @@ export default {
 
         return lReturnObj;
       });
-
-      console.log('aqui ', lMappedDataMessages)
-      for(let boraDemonio in lMappedDataMessages)
-      {
-        this.messages.push(boraDemonio)
-      }
+      this.messages = [...lMappedDataMessages];
     },
     getUser() {
       this.user = JSON.parse(localStorage.getItem(GeneralConstants.STORAGEKEY));
