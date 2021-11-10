@@ -75,7 +75,10 @@ export default {
 
         return lReturnObj;
       });
-      this.messages = [...new Set([...lMappedDataMessages])];
+      for(let i in lMappedDataMessages)
+      {
+        this.messages.push(i)
+      }
     },
     getUser() {
       this.user = JSON.parse(localStorage.getItem(GeneralConstants.STORAGEKEY));
