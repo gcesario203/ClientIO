@@ -45,7 +45,7 @@ import Utils from "../utils/utils";
 export default {
   data: function () {
     return {
-      socket: io("http://localhost:4001/"),
+      socket: io(GeneralConstants.SOCKETURL),
       events: EventConstants,
       messages: [],
       bdMessages: [],

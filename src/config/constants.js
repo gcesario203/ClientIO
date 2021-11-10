@@ -14,8 +14,9 @@ const EventConstants =
 }
 
 const GeneralConstants = {
-    BASEURL: "http://localhost:3000",
-    STORAGEKEY: 'TCCAPP'
+    BASEURL: "https://tcc-app-api.herokuapp.com",
+    STORAGEKEY: 'TCCAPP',
+    SOCKETURL: "https://tcc-app-socket-server.herokuapp.com/"
 }
 
 const ResponseConstants = {
