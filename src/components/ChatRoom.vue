@@ -75,7 +75,7 @@ export default {
 
         return lReturnObj;
       });
-      this.messages = [...this.messages, ...lMappedDataMessages];
+      this.messages = [...new Set([...this.messages, ...lMappedDataMessages])];
     },
     getUser() {
       this.user = JSON.parse(localStorage.getItem(GeneralConstants.STORAGEKEY));
