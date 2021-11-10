@@ -75,9 +75,11 @@ export default {
 
         return lReturnObj;
       });
-      for(let i in lMappedDataMessages)
+
+      console.log('aqui ', lMappedDataMessages)
+      for(let boraDemonio in lMappedDataMessages)
       {
-        this.messages.push(i)
+        this.messages.push(boraDemonio)
       }
     },
     getUser() {
