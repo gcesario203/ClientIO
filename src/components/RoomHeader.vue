@@ -1,5 +1,5 @@
 <template>
-<div class="roomHeader">
+<div class="roomHeader mt-5">
     <h2>{{roomName}}</h2>
 </div>
 </template>

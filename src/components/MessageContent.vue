@@ -1,8 +1,8 @@
 <template>
-    <div class="messageContent">
-        <h3 class="messageContent__name">{{name}}</h3>
-        <h3 class="messageContent__message">{{message}}</h3>
-    </div>
+    <v-card width="300" class="mt-5">
+        <v-card-title>{{name}}</v-card-title>
+        <v-card-text>{{message}}</v-card-text>
+    </v-card>
 </template>
 
 <script>

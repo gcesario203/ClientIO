@@ -12,9 +12,14 @@
           <v-list>
             <v-list-item>
               <v-list-item-title @click="logout">
-                <v-btn icon>
-                  <v-icon color="red">mdi-logout</v-icon>
-                </v-btn>
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn icon v-bind="attrs" v-on="on">
+                      <v-icon color="red">mdi-logout</v-icon>
+                    </v-btn>
+                  </template>
+                  <span>Sair</span>
+                </v-tooltip>
               </v-list-item-title>
             </v-list-item>
           </v-list>
@@ -38,6 +43,12 @@
             persistent-hint
             hint="Email do cadastro"
           ></v-text-field>
+        </v-col>
+        <v-col cols="12" class="d-flex justify-center">
+          <v-btn color="#232e21" style="color: white" width="" @click="openModelCreateRoom()">
+            <v-col style="color: white">Criar Sala</v-col>
+            <v-col style="color: white"><v-icon small>mdi-plus</v-icon></v-col>
+          </v-btn>
         </v-col>
       </v-row>
     </v-col>
@@ -82,6 +93,7 @@
     </v-col>
 
     <KeyDialog ref="KeyDialog" @acceptCallback="joinRoom"></KeyDialog>
+    <CreateRoom ref="CreateRoom" @acceptCallback="createRoom"></CreateRoom>
   </v-layout>
 </template>
 
@@ -89,6 +101,7 @@
 import { GeneralConstants, MethodsConstants } from "../config/constants.js";
 import Utils from "../utils/utils";
 import KeyDialog from "../components/KeyDialog.vue";
+import CreateRoom from "../components/CreateRoom.vue";
 
 export default {
   data() {
@@ -100,6 +113,7 @@ export default {
   },
   components: {
     KeyDialog,
+    CreateRoom
   },
   methods: {
     logout() {
@@ -111,9 +125,8 @@ export default {
       this.user = JSON.parse(localStorage.getItem(GeneralConstants.STORAGEKEY));
     },
 
-    goToTheRoom(pRoomId)
-    {
-      this.$router.push(`/chatRoom/${pRoomId}`)
+    goToTheRoom(pRoomId) {
+      this.$router.push(`/chatRoom/${pRoomId}`);
     },
     async getRooms() {
       const lResponse = await Utils.SendAuthMessage(
@@ -128,6 +141,9 @@ export default {
     openModel(pRoomId) {
       this.$refs.KeyDialog.openModal(pRoomId);
     },
+    openModelCreateRoom() {
+      this.$refs.CreateRoom.openModal();
+    },
     async getUserRooms() {
       const lResponse = await Utils.SendAuthMessage(
         MethodsConstants.GET,
@@ -135,6 +151,19 @@ export default {
       );
 
       this.userRooms = lResponse.data.rooms;
+    },
+    async createRoom(pData)
+    {
+
+      await Utils.SendAuthMessage(
+        MethodsConstants.POST,
+        `/rooms`,
+        pData,
+        "Sala criada com sucesso"
+      )
+
+      await this.getUserRooms()
+      await this.getRooms()
     },
     async joinRoom({ pRoomId, pKey = null }) {
       const lJoinRoomFields = {
@@ -150,7 +179,7 @@ export default {
         "Aceito na Sala com sucesso"
       );
 
-      this.goToTheRoom(pRoomId)
+      this.goToTheRoom(pRoomId);
     },
   },
   async mounted() {
@@ -162,7 +191,7 @@ export default {
 
   async beforeDestroy() {
     clearInterval(await this.getUserRooms());
-    clearInterval(await this.getUserRooms());
+    clearInterval(await this.getRooms());
   },
 };
 </script>
