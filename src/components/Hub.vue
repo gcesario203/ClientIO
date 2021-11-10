@@ -172,14 +172,22 @@ export default {
         chave: pKey !== null ? pKey : "",
       };
 
-      await Utils.SendAuthMessage(
+      const lResult = await Utils.SendAuthMessage(
         MethodsConstants.POST,
         `/rooms/join`,
         lJoinRoomFields,
         "Aceito na Sala com sucesso"
       );
 
-      this.goToTheRoom(pRoomId);
+      if(lResult === false)
+      {
+        console.log(lResult)
+      }
+      else
+      {
+        this.goToTheRoom(pRoomId);
+      }
+      
     },
   },
   async mounted() {

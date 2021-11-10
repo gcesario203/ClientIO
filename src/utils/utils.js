@@ -18,7 +18,9 @@ export default {
 
             return lResponse
         } catch (error) {
-            Vue.$notify.warning(error)
+            Vue.$notify.warning(error.response.data.error)
+
+            return false
         }
     },
 
@@ -34,7 +36,7 @@ export default {
 
             return true
         } catch (error) {
-            Vue.$notify.danger(error)
+            Vue.$notify.danger(error.response.data.error)
             return false   
         }
     },
@@ -61,7 +63,7 @@ export default {
             Axios.defaults.headers.common['Authorization'] = ``
             localStorage.removeItem(GeneralConstants.STORAGEKEY)
 
-            Vue.$notify.warning(error)
+            // Vue.$notify.warning(error.response.data.error)
             return false
         }
     },
@@ -80,7 +82,9 @@ export default {
 
             return lResponse
         } catch (error) {
-            Vue.$notify.warning(error)
+            Vue.$notify.warning(error.response.data.error)
+
+            return false
         }
     },
 
