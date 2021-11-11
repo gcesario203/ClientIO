@@ -31,8 +31,6 @@ export default {
   methods: {
     getUser() {
       this.user = JSON.parse(localStorage.getItem(GeneralConstants.STORAGEKEY));
-
-      console.log(this.user.nome)
     },
   },
   mounted() {

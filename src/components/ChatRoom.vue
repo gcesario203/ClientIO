@@ -13,8 +13,8 @@
         :roomName="roomName"
       />
 
-      <v-row style="height: 80vh; overflow-y: scroll">
-        <MessageScreen :messages="messages" />
+      <v-row style="height: 80vh; overflow-y: scroll" id="autoScroll" >
+        <MessageScreen  :messages="messages" />
       </v-row>
       <v-row class="mx-2">
         <Input
@@ -75,7 +75,15 @@ export default {
 
         return lReturnObj;
       });
-      this.messages = [...lMappedDataMessages];
+
+      this.messages.push(lMappedDataMessages[lMappedDataMessages.length - 1]);
+
+      this.autoScroll()
+      this.mapBagulho()
+    },
+    autoScroll() {
+      var container = this.$el.querySelector("#autoScroll");
+      container.scrollTop = container.scrollHeight ;
     },
     getUser() {
       this.user = JSON.parse(localStorage.getItem(GeneralConstants.STORAGEKEY));
@@ -105,15 +113,18 @@ export default {
         `/messages/${this.$router.history.current.params.id}`
       );
 
-      this.messages = lResponse.data.messages.map(x => x = {message: x.conteudo, userName: x.nome})
+      this.messages = lResponse.data.messages.map(
+        (x) => (x = { message: x.conteudo, userName: x.nome })
+      );
     },
   },
   async mounted() {
     this.getUser();
     await this.getRoomName(this.$router.history.current.params.id);
 
-    await this.getMessages()
+    await this.getMessages();
 
+    this.autoScroll()
     this.socket.emit(this.events.JOIN, {
       roomName: this.roomName,
       userData: this.user,

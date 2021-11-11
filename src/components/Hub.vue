@@ -31,6 +31,7 @@
             label="Nome"
             v-model="user.nome"
             persistent-hint
+            @blur="changeUser()"
             hint="Nome que será exibido nas salas"
           ></v-text-field>
         </v-col>
@@ -45,7 +46,12 @@
           ></v-text-field>
         </v-col>
         <v-col cols="12" class="d-flex justify-center">
-          <v-btn color="#232e21" style="color: white" width="" @click="openModelCreateRoom()">
+          <v-btn
+            color="#232e21"
+            style="color: white"
+            width=""
+            @click="openModelCreateRoom()"
+          >
             <v-col style="color: white">Criar Sala</v-col>
             <v-col style="color: white"><v-icon small>mdi-plus</v-icon></v-col>
           </v-btn>
@@ -151,6 +157,22 @@ export default {
       );
 
       this.userRooms = lResponse.data.rooms;
+    },
+    async changeUser() {
+      const lFields = {
+        nome: this.user.nome,
+        email: this.user.email,
+      };
+
+      await Utils.SendMessageUnauth(MethodsConstants.PUT, `/users/${this.user.id}`, lFields,'Nome alterado com sucesso' )
+
+      let lModifiedUser = JSON.parse(localStorage.getItem(GeneralConstants.STORAGEKEY))
+
+      lModifiedUser["nome"] = this.user.nome
+
+      localStorage.setItem(GeneralConstants.STORAGEKEY, JSON.stringify(lModifiedUser))
+
+      this.getUser()
     },
     async createRoom(pData)
     {
